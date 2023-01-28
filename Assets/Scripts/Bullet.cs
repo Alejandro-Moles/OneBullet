@@ -34,4 +34,18 @@ public class Bullet : MonoBehaviour
     {
         transform.position += transform.forward * Bulletspeed * Time.deltaTime;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //si choca con algo, hacemos una variable que haga referencia a la interface, y que la coja del componente al que ha chocado
+        IDamage damage = other.GetComponent<IDamage>();
+        //si no es null, quiere decir que ese componente tiene relacion con la interface, por lo tanto puede recibir daño
+        if (damage != null)
+        {
+            //llamamos a la funcion de recibir daño
+            damage.DoDamage(1);
+        }
+        //desactivamos el objeto para que si se ha chocado que no siga avanzando
+        gameObject.SetActive(false);
+    }
 }

@@ -37,6 +37,9 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private float jumpForce = 1f;
     //esta variable nos servirá para las fisicas del salto
     private float jumpValue;
+
+    [Header("Animaciones")]
+    [SerializeField] private Animator PlayerAnimator;
     #endregion
 
     #region Metodos Unity
@@ -109,6 +112,17 @@ public class Player_Move : MonoBehaviour
         //le asignamos al CharacterController el movimiento
         CHmove = transform.right * CHx + transform.forward * CHz;
         CHcontroller.Move(CHmove * CHspeed * Time.deltaTime);
+
+        
+        if(CHx != 0f || CHz != 0)
+        {
+            PlayerAnimator.SetBool("Walk", true);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("Walk", false);
+        }
+        
     }
 
     private void Jump()

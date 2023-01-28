@@ -1,20 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_Actions : MonoBehaviour
 {
+    #region Variables
+    [Header("Disparo")]
     //variable que indica el transform de la pistola
     [SerializeField] private Transform TransformGun;
     //variable que indica el transform de la camara
     [SerializeField] private Transform TransformCam;
 
-
     //variable que nos indica el Raycast
     private RaycastHit hit;
-
     [SerializeField] private LayerMask IgnoreLayer;
 
+
+    [Header("Animaciones")]
+    [SerializeField] private Animator PlayerAnimator;
+
+    [Header("Movimiento")]
+    //esta variable hace referencia a componente charactercontroller de nuestro personje
+    [SerializeField] private CharacterController CHcontroller;
+    #endregion
+
+    #region Metodos Unity
     private void Update()
     {
         //linea que indica donde esta apuntando la camara es de color rojo
@@ -25,12 +36,16 @@ public class Player_Actions : MonoBehaviour
 
         Shoot();
     }
+    #endregion
 
+    #region Metodos Propios
     private void Shoot()
     {
         //si se ha pulsado el click izquierdo del raton, entonces dispara
         if (Input.GetMouseButtonDown(0))
         {
+            DesactivateMovement();
+
             //esta variable Vector3 nos indicará hacia que parte ira la bala, le añadirá un pequeño rango donde pude impactar la bala
             Vector3 direction = TransformCam.TransformDirection(new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f), 1));
 
@@ -56,7 +71,24 @@ public class Player_Actions : MonoBehaviour
                 bulletObject.transform.LookAt(dir);
             }
 
-            
+
+        }
+        else
+        {
+            //desactivamos la animacion de disparar
+            PlayerAnimator.SetBool("Shoot", false);
         }
     }
+
+    private void DesactivateMovement()
+    {
+        var CHmove = transform.right * 0 + transform.forward * 0;
+        CHcontroller.Move(CHmove);
+
+        //deactivamos la animacion de correr
+        PlayerAnimator.SetBool("Walk", false);
+        //activamos la animacion de disparar
+        PlayerAnimator.SetBool("Shoot", true);
+    }
+    #endregion
 }
