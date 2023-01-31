@@ -40,6 +40,9 @@ public class Player_Move : MonoBehaviour
 
     [Header("Animaciones")]
     [SerializeField] private Animator PlayerAnimator;
+
+    [Header("Scripts Externos")]
+    private Player_Actions player_Actions;
     #endregion
 
     #region Metodos Unity
@@ -50,20 +53,28 @@ public class Player_Move : MonoBehaviour
 
         //asignamos las fisicas al salto
         jumpValue = Mathf.Sqrt(jumpForce * -2  * gravity);
+
+        player_Actions = GetComponent<Player_Actions>();
     }
 
     void Update()
     {
-        LookMouse();
-
-        //comprobamos si esta en el suelo, en el caso de que si, resetamos la velocidad de la gravedad, para que no siga incrementandose
-        if(isGrounded && gravitySpeed.y < 0) 
+        if (player_Actions.GetSetCanMove)
         {
-            gravitySpeed.y = gravity;
-        }
+            LookMouse();
+            //comprobamos si esta en el suelo, en el caso de que si, resetamos la velocidad de la gravedad, para que no siga incrementandose
+            if (isGrounded && gravitySpeed.y < 0)
+            {
+                gravitySpeed.y = gravity;
+            }
 
-        Movement();
-        Jump();
+            Movement();
+            Jump();
+        }
+        else
+        {
+            Invoke("CanMove", 0.5f);
+        }
 
         //hacemos que la gravedad se incremente
         gravitySpeed.y += gravity * Time.deltaTime;
@@ -134,6 +145,12 @@ public class Player_Move : MonoBehaviour
             isGrounded= false;
             gravitySpeed.y = jumpValue;
         }
+    }
+
+
+    private void CanMove()
+    {
+        player_Actions.GetSetCanMove = true;
     }
 
 
