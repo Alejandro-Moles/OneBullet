@@ -167,7 +167,6 @@ public class EnemyController : MonoBehaviour, IDamage
 
         EnemyAnimator.SetTrigger("Die");
         Destroy(gameObject, 1.4f);
-
     }
     #endregion
 

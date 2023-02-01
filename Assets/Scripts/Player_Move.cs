@@ -92,6 +92,11 @@ public class Player_Move : MonoBehaviour
                 isGrounded = true;
             }
         }
+
+        if (hit.collider.CompareTag("Enemy"))
+        {
+            Death();
+        }
     }
     #endregion
 
@@ -153,7 +158,10 @@ public class Player_Move : MonoBehaviour
         player_Actions.GetSetCanMove = true;
     }
 
-
   
+    private void Death()
+    {
+
+    }
     #endregion
 }
