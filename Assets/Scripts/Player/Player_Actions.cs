@@ -30,6 +30,10 @@ public class Player_Actions : MonoBehaviour
     private int Ammo = 1;
     [SerializeField] private TextMeshProUGUI ammoText;
 
+    [Header("Granada")]
+    private float ThrowForce = 550f;
+    [SerializeField] private GameObject grenadePrefab;
+
 
     #endregion
 
@@ -45,6 +49,7 @@ public class Player_Actions : MonoBehaviour
         ammoText.text = Ammo.ToString();
 
         Shoot();
+        ThrowGrenade();
     }
     #endregion
 
@@ -112,6 +117,16 @@ public class Player_Actions : MonoBehaviour
     public void ReloadAmmo()
     {
         Ammo++;
+    }
+
+
+    private void ThrowGrenade()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            GameObject nuevaGranada = Instantiate (grenadePrefab, transform.position, transform.rotation);
+            nuevaGranada.GetComponent<Rigidbody>().AddForce(transform.forward * ThrowForce);
+        }
     }
     #endregion
 

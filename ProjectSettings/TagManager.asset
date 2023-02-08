@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - FxTemporaire
+  - Grenade
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - Grenade
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

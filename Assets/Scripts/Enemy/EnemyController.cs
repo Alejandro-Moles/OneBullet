@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour, IDamage
 
     [Header("Muerte")]
     private bool isDeath = false;
+    [SerializeField] private NumEnemies numEnemies;
     #endregion
 
     #region Metodos Unity
@@ -50,6 +52,7 @@ public class EnemyController : MonoBehaviour, IDamage
     }
     void Update()
     {
+
         //se saca este vector para que el enemigo solo pueda rotar en el eje x 
         Vector3 posNoRotacion = new Vector3(target.position.x, transform.position.y, target.position.z);
         //le decimos al enemigo que mire hacia la posicion indicada
@@ -167,6 +170,8 @@ public class EnemyController : MonoBehaviour, IDamage
 
         EnemyAnimator.SetTrigger("Die");
         Destroy(gameObject, 1.4f);
+
+        numEnemies.RestEnemies(1);
     }
     #endregion
 

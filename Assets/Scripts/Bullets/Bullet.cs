@@ -45,7 +45,6 @@ public class Bullet : MonoBehaviour
             //llamamos a la funcion de recibir daño
             damage.DoDamage(1);
         }
-        //desactivamos el objeto para que si se ha chocado que no siga avanzando
-        gameObject.SetActive(false);
+        
     }
 }
