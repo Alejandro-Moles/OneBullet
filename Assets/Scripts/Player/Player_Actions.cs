@@ -17,7 +17,6 @@ public class Player_Actions : MonoBehaviour
     private RaycastHit hit;
     [SerializeField] private LayerMask IgnoreLayer;
 
-
     [Header("Animaciones")]
     [SerializeField] private Animator PlayerAnimator;
 
@@ -27,12 +26,17 @@ public class Player_Actions : MonoBehaviour
     private bool CanMove = true;
 
     [Header("Municion")]
+    //variable que indica la municion de balas
     private int Ammo = 1;
     [SerializeField] private TextMeshProUGUI ammoText;
 
     [Header("Granada")]
+    //variable que indica la fuerza de lanzamiento de la granada
     private float ThrowForce = 550f;
     [SerializeField] private GameObject grenadePrefab;
+    //variable que indica la municion de las granadas
+    private int GrenadeAmmo = 0;
+    [SerializeField] private TextMeshProUGUI GrenadeAmmoText;
 
 
     #endregion
@@ -45,8 +49,8 @@ public class Player_Actions : MonoBehaviour
         //linea que indica donde esta apuntando la pistola es de color azul
         Debug.DrawRay(TransformGun.position, TransformGun.forward * 100f, Color.blue);
 
-
         ammoText.text = Ammo.ToString();
+        GrenadeAmmoText.text = GrenadeAmmo.ToString();
 
         Shoot();
         ThrowGrenade();
@@ -59,30 +63,29 @@ public class Player_Actions : MonoBehaviour
         //si se ha pulsado el click izquierdo del raton, entonces dispara
         if (Input.GetMouseButtonDown(0) && Ammo > 0)
         {
+            //decimos que se active la animacion de disparo
+            PlayerAnimator.SetTrigger("DoShoot");
+            //restamos 1 a la municion
             Ammo--;
+            //instanciamos la explosion que sale del arma
             GameObject exp = Instantiate(explosion,TransformGun.position, Quaternion.identity);
+            //destruimos la explosion a los 0.5f
             Destroy(exp, 0.5f);
+            //desactivamos el movimiento
             DesactivateMovement();
-            Invoke("DoShoot", 0.1f);
-        }
-        else
-        {
-            //desactivamos la animacion de disparar
-            PlayerAnimator.SetBool("Shoot", false);
+            //llamamos a la funcion de hacer el disparo
+            DoShoot();
         }
     }
 
+    //funcion que desactiva el movimiento
     private void DesactivateMovement()
     {
+        //descativamos el movimiento del jugador al disparar
         var CHmove = transform.right * 0 + transform.forward * 0;
         CHcontroller.Move(CHmove);
-
         CanMove= false;
-
-        //activamos la animacion de disparar
-        PlayerAnimator.SetBool("Shoot", true);
     }
-
 
     private void DoShoot()
     {
@@ -113,25 +116,47 @@ public class Player_Actions : MonoBehaviour
         }
     }
 
-
+    //funcion que recarga el arma
     public void ReloadAmmo()
     {
-        Ammo++;
+        StartCoroutine(DoReloadAmmo());
     }
 
-
+    //metodo que lanza la granada
     private void ThrowGrenade()
     {
-        if (Input.GetMouseButtonDown(1))
+        //si se pulsa el click derecho se lanza la granada
+        if (Input.GetMouseButtonDown(1) && GrenadeAmmo >= 1)
         {
-            GameObject nuevaGranada = Instantiate (grenadePrefab, transform.position, transform.rotation);
-            nuevaGranada.GetComponent<Rigidbody>().AddForce(transform.forward * ThrowForce);
+            GrenadeAmmo--;
+            //instanciamos la granada en la posicion de la pistola para poder asi lanzarla hacia arriba tambien
+            GameObject nuevaGranada = Instantiate (grenadePrefab, TransformGun.position, TransformGun.rotation);
+            //le añadimos una fuerza de lanzamiento
+            nuevaGranada.GetComponent<Rigidbody>().AddForce(TransformGun.forward * ThrowForce);
         }
+    }
+
+    //funcion que recarga las granadas
+    public void ReloadGrenade()
+    {
+        GrenadeAmmo++;
+    }
+    #endregion
+
+    #region Corrutinas
+    //corrutina que esperará a qe el jugador recargue para que se le añada la municion
+    private IEnumerator DoReloadAmmo()
+    {
+        //esperamos 1.1 segundos
+        yield return new WaitForSeconds(1.1f);
+        //sumamos 1 a la municion
+        Ammo++;
     }
     #endregion
 
     #region Metodos GetSet
     public bool GetSetCanMove { get => CanMove; set => CanMove = value; }
     public int GetSetAmmo { get => Ammo; set => Ammo = value; }
+    public int GetSetGrenadeAmmo { get => GrenadeAmmo; set => GrenadeAmmo = value; }
     #endregion
 }

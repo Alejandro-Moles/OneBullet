@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7310059976352280059}
   - component: {fileID: 7370459589189605900}
   - component: {fileID: 7517908175764935886}
+  - component: {fileID: 6169978597213451493}
   m_Layer: 3
   m_Name: Frag_Granade_prefab
   m_TagString: Grenade
@@ -115,3 +116,19 @@ CapsuleCollider:
   m_Height: 0.3298577
   m_Direction: 1
   m_Center: {x: -0.0062710047, y: -0.025354445, z: -0.004563436}
+--- !u!114 &6169978597213451493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743952917080061498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45d6a941eea99f428611bbfa195bf7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
+  radius: 6
+  ExoplosionForze: 100
+  ExplosionEffect: {fileID: 1163451204420696, guid: 95175aeab20f4d041860eca89a4ddded, type: 3}
