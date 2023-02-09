@@ -43,6 +43,11 @@ public class Player_Move : MonoBehaviour
 
     [Header("Scripts Externos")]
     private Player_Actions player_Actions;
+
+    [Header("Correr")]
+    [SerializeField] private float runSpeed;
+    private float TimeRuning = 1.5f;
+    private bool canRun = true;
     #endregion
 
     #region Metodos Unity
@@ -70,6 +75,7 @@ public class Player_Move : MonoBehaviour
 
             Movement();
             Jump();
+            Run();
         }
         else
         {
@@ -137,6 +143,7 @@ public class Player_Move : MonoBehaviour
         else
         {
             PlayerAnimator.SetBool("Walk", false);
+            PlayerAnimator.SetBool("isRunning", false);
         }
         
     }
@@ -158,10 +165,37 @@ public class Player_Move : MonoBehaviour
         player_Actions.GetSetCanMove = true;
     }
 
+    private void Run()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canRun) 
+        {
+            CHspeed = runSpeed;
+            StartCoroutine(TimeRun());
+            PlayerAnimator.SetBool("isRunning", true);
+        }
+    }
   
     private void Death()
     {
 
+    }
+    #endregion
+
+
+    #region Corrutinas
+    private IEnumerator TimeRun()
+    {
+        yield return new WaitForSeconds(TimeRuning);
+        PlayerAnimator.SetBool("isRunning", false);
+        canRun = false;
+        CHspeed = 5;
+        StartCoroutine(RecoveryRun());
+    }
+
+    private IEnumerator RecoveryRun()
+    {
+        yield return new WaitForSeconds(2f);
+        canRun= true;
     }
     #endregion
 }

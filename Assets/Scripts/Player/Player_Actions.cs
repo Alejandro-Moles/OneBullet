@@ -38,7 +38,6 @@ public class Player_Actions : MonoBehaviour
     private int GrenadeAmmo = 0;
     [SerializeField] private TextMeshProUGUI GrenadeAmmoText;
 
-
     #endregion
 
     #region Metodos Unity

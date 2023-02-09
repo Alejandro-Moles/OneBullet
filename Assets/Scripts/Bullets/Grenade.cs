@@ -44,7 +44,7 @@ public class Grenade : MonoBehaviour
     private void Exploted()
     {
         //instanciamos la explosion
-        Instantiate(ExplosionEffect, transform.position,transform.rotation);
+        GameObject explosion =  Instantiate(ExplosionEffect, transform.position,transform.rotation);
 
         //comprobamos con que ha chocado
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
@@ -52,9 +52,17 @@ public class Grenade : MonoBehaviour
         {
             //le añadimos a lo que ha chocado una fuerza
             Rigidbody rb = rangeObjet.GetComponent<Rigidbody>();
+            EnemyController enemy = rangeObjet.GetComponent<EnemyController>();
+
+
             if (rb != null)
             {
                 rb.AddExplosionForce(ExoplosionForze * 10,transform.position, radius);
+            }
+
+            if(enemy != null)
+            {
+                enemy.DoDamage(1);
             }
         }
 
@@ -63,7 +71,6 @@ public class Grenade : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().enabled = false;
 
         //destruimos la granada en un tiempo determinado
-        Destroy(ExplosionEffect);
         Destroy(gameObject, delay * 2);
     }
     #endregion

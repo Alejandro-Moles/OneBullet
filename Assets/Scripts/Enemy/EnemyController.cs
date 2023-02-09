@@ -25,6 +25,7 @@ public class EnemyController : MonoBehaviour, IDamage
     //esta variable nos indicará la velocidad a la que se movera el enemigo al correr
     [SerializeField] private float RunSpeed;
 
+
     [Header("Ataque")]
     [SerializeField] private float AttackDistance;
     private string[] Animations = new string[2] { "Attack 01", "Attack 02" };
@@ -52,15 +53,13 @@ public class EnemyController : MonoBehaviour, IDamage
     }
     void Update()
     {
-
+        //sacamos constantemente la distancia que hay entre el jugador y en enemigo
+        DistanceToPlayer = Vector3.Distance(transform.position, target.position);
+        
         //se saca este vector para que el enemigo solo pueda rotar en el eje x 
         Vector3 posNoRotacion = new Vector3(target.position.x, transform.position.y, target.position.z);
         //le decimos al enemigo que mire hacia la posicion indicada
         transform.LookAt(posNoRotacion);
-
-        //sacamos constantemente la distancia que hay entre el jugador y en enemigo
-        DistanceToPlayer = Vector3.Distance(transform.position, target.position);
-
 
         EnemyActions();
     }
