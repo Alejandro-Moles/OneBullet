@@ -252,7 +252,7 @@ namespace SlimUI.ModernMenu{
 		}
 
 		
-		IEnumerator LoadAsynchronously(string sceneName){ // scene name is just the name of the current scene being loaded
+		IEnumerator LoadAsynchronously(string sceneName){ 
 			AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 			
 			operation.allowSceneActivation = false;
