@@ -6,14 +6,9 @@ using UnityEngine;
 
 public class TutorialAnimation : MonoBehaviour
 {
-    private Animator UIAnimator;
-    [SerializeField] private TextMeshProUGUI Tutorial_Text;
-    [SerializeField] private TextMeshProUGUI TextBox;
 
-    private void Start()
-    {
-        UIAnimator = GetComponent<Animator>();
-    }
+    [SerializeField] private Animator animator;
+    [SerializeField] private TextMeshProUGUI TextBox;
 
     public void MoveMessage()
     {
@@ -22,36 +17,18 @@ public class TutorialAnimation : MonoBehaviour
 
     public void ViewUIMessage()
     {
-        UIAnimator.SetTrigger("ViewUI");
+        animator.SetTrigger("UI");
     }
 
-    public void ShowBullet()
+    public void ShowBottonPart()
     {
-        UIAnimator.SetTrigger("Ammo");
+        animator.SetTrigger("Botton");
     }
 
-    public void ShowGrenade()
+    public void ShowTopPart()
     {
-        UIAnimator.SetTrigger("Grenade");
+        animator.SetTrigger("Top");
     }
-
-    public void ShowWeapon()
-    {
-        UIAnimator.SetTrigger("Weapon");
-    }
-
-    public void ShowEnemies()
-    {
-        UIAnimator.SetTrigger("Enemies");
-    }
-
-
-
-    public void ChangeText(string text)
-    {
-        Tutorial_Text.text = text;
-    }
-
 
     public void ChangeTextBox(string text)
     {
@@ -61,5 +38,10 @@ public class TutorialAnimation : MonoBehaviour
     public void WriteSpace()
     {
         TextBox.text = TextBox.text + " ";
+    }
+
+    public void DeleteText()
+    {
+        TextBox.text = "";
     }
 }
