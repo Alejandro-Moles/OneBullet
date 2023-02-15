@@ -16,15 +16,34 @@ public class TutorialAnimation : MonoBehaviour
     //variable que me dirá si el jugador se ha movido por primera vez
     private bool isMoveDone = false;
 
+    //variable que nos indica si el jugador puede disparar
+    private bool playerCanShoot = false;
+    //variable que nos indica si el jugador ha disparado por primera vez
+    private bool isShootDone = false;
+
     private void Update()
     {
         if(playerCanMove) 
         {
-            if(Input.GetAxisRaw("Vertical")>0 || Input.GetAxisRaw("Horizontal") > 0) 
+            if(Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0) 
             {
                 MoveDonne();
             }
         }
+
+        if (playerCanShoot)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShootDone();
+            }
+        }
+    }
+
+    //funcion que muestra el mensaje para que el jugador dispare
+    public void ShootMenssage()
+    {
+        animator.SetTrigger("Shoot");
     }
 
     //funcion que muestra el mensaje para que el jugador se mueva
@@ -82,6 +101,11 @@ public class TutorialAnimation : MonoBehaviour
         playerCanMove = true;
     }
 
+    public void PlayerDoShoot()
+    {
+        playerCanShoot = true;
+    }
+
     //funcion que se activa la primera vez que el jugador se mueve
     public void MoveDonne()
     {
@@ -89,6 +113,16 @@ public class TutorialAnimation : MonoBehaviour
         {
             isMoveDone= true;
             animator.SetTrigger("MoveDone");
+        }
+    }
+
+    //funcion que se activa la primera vez que el jugador ha disparado
+    public void ShootDone()
+    {
+        if (!isShootDone)
+        {
+            isShootDone = true;
+            animator.SetTrigger("ShootDone");
         }
     }
 }
