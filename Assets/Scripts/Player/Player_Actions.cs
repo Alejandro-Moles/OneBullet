@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Actions : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Player_Actions : MonoBehaviour
     //variable que nos indica el Raycast
     private RaycastHit hit;
     [SerializeField] private LayerMask IgnoreLayer;
+    private bool TutorialShoot = false;
 
     [Header("Animaciones")]
     [SerializeField] private Animator PlayerAnimator;
@@ -41,6 +43,15 @@ public class Player_Actions : MonoBehaviour
     #endregion
 
     #region Metodos Unity
+
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().name != "Level_1")
+        {
+            TutorialShoot= true;
+        }
+    }
+
     private void Update()
     {
         //linea que indica donde esta apuntando la camara es de color rojo
@@ -59,22 +70,22 @@ public class Player_Actions : MonoBehaviour
     #region Metodos Propios
     private void Shoot()
     {
-        //si se ha pulsado el click izquierdo del raton, entonces dispara
-        if (Input.GetMouseButtonDown(0) && Ammo > 0)
-        {
-            //decimos que se active la animacion de disparo
-            PlayerAnimator.SetTrigger("DoShoot");
-            //restamos 1 a la municion
-            Ammo--;
-            //instanciamos la explosion que sale del arma
-            GameObject exp = Instantiate(explosion,TransformGun.position, Quaternion.identity);
-            //destruimos la explosion a los 0.5f
-            Destroy(exp, 0.5f);
-            //desactivamos el movimiento
-            DesactivateMovement();
-            //llamamos a la funcion de hacer el disparo
-            DoShoot();
-        }
+            //si se ha pulsado el click izquierdo del raton, entonces dispara
+            if (Input.GetMouseButtonDown(0) && Ammo > 0 && TutorialShoot)
+            {
+                //decimos que se active la animacion de disparo
+                PlayerAnimator.SetTrigger("DoShoot");
+                //restamos 1 a la municion
+                Ammo--;
+                //instanciamos la explosion que sale del arma
+                GameObject exp = Instantiate(explosion, TransformGun.position, Quaternion.identity);
+                //destruimos la explosion a los 0.5f
+                Destroy(exp, 0.5f);
+                //desactivamos el movimiento
+                DesactivateMovement();
+                //llamamos a la funcion de hacer el disparo
+                DoShoot();
+            }
     }
 
     //funcion que desactiva el movimiento
@@ -157,5 +168,6 @@ public class Player_Actions : MonoBehaviour
     public bool GetSetCanMove { get => CanMove; set => CanMove = value; }
     public int GetSetAmmo { get => Ammo; set => Ammo = value; }
     public int GetSetGrenadeAmmo { get => GrenadeAmmo; set => GrenadeAmmo = value; }
+    public bool GetSetTutorialShoot { get => TutorialShoot; set => TutorialShoot = value; }
     #endregion
 }

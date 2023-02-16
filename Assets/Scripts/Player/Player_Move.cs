@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Move : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class Player_Move : MonoBehaviour
     private float CHx, CHz;
     //esta variable es el vector de nuestro movimiento
     private Vector3 CHmove;
+    private bool TutorialCanMove = false;
 
     [Header("Gravedad")]
     //esta variable es la que hace que la velocidad al caer sea exponencial
@@ -48,11 +50,18 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private float runSpeed;
     private float TimeRuning = 1.5f;
     private bool canRun = true;
+
+    public bool GetSetTutorialCanMove { get => TutorialCanMove; set => TutorialCanMove = value; }
     #endregion
 
     #region Metodos Unity
     void Start()
     {
+        if (SceneManager.GetActiveScene().name != "Level_1")
+        {
+            TutorialCanMove = true;
+        }
+
         //esto hace que nuestro cursor no se vea en tiempo de ejecucion
         Cursor.lockState= CursorLockMode.Locked;
 
@@ -64,22 +73,27 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
-        if (player_Actions.GetSetCanMove)
+        //comprueba si se ha realizado el tutorial
+        if (TutorialCanMove)
         {
-            LookMouse();
-            //comprobamos si esta en el suelo, en el caso de que si, resetamos la velocidad de la gravedad, para que no siga incrementandose
-            if (isGrounded && gravitySpeed.y < 0)
+            //comprueba si el jugador se puede mover
+            if (player_Actions.GetSetCanMove)
             {
-                gravitySpeed.y = gravity;
-            }
+                LookMouse();
+                //comprobamos si esta en el suelo, en el caso de que si, resetamos la velocidad de la gravedad, para que no siga incrementandose
+                if (isGrounded && gravitySpeed.y < 0)
+                {
+                    gravitySpeed.y = gravity;
+                }
 
-            Movement();
-            Jump();
-            Run();
-        }
-        else
-        {
-            Invoke("CanMove", 0.5f);
+                Movement();
+                Jump();
+                Run();
+            }
+            else
+            {
+                Invoke("CanMove", 0.5f);
+            }
         }
 
         //hacemos que la gravedad se incremente

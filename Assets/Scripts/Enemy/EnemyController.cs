@@ -38,6 +38,8 @@ public class EnemyController : MonoBehaviour, IDamage
     [Header("Muerte")]
     private bool isDeath = false;
     [SerializeField] private NumEnemies numEnemies;
+    [SerializeField] private TutorialAnimation tutorial;
+
     #endregion
 
     #region Metodos Unity
@@ -150,13 +152,20 @@ public class EnemyController : MonoBehaviour, IDamage
             StartCoroutine("ColdownAttack");
         }
     }
+
+    private void MessageTutorial()
+    {
+        if (tutorial)
+        {
+            tutorial.EnemyDie();
+        }
+    }
     #endregion
 
     #region Metodos Interfaz
     public void DoDamage(int vid)
     {
         isDeath= true;
-
         //le decimos que su velocidad sea cero;
         agent.speed = 0;
 
@@ -169,6 +178,8 @@ public class EnemyController : MonoBehaviour, IDamage
 
         EnemyAnimator.SetTrigger("Die");
         Destroy(gameObject, 1.4f);
+
+        MessageTutorial();
 
         numEnemies.RestEnemies(1);
     }
