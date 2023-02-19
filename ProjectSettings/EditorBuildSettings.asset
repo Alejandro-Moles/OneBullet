@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_3.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/NivelSuperado.unity
+    guid: 6afaddabbbdc419459d90e1a2b2b569e
+  - enabled: 1
+    path: Assets/Scenes/Death_Scene.unity
+    guid: b7dfda6308c7b5946bfc8ff0916b7e51
   m_configObjects: {}

@@ -51,12 +51,20 @@ public class Player_Move : MonoBehaviour
     private float TimeRuning = 1.5f;
     private bool canRun = true;
 
+    [Header("Pause")]
+    [SerializeField] private GameObject PanelMenu, PanelUI;
+
+    [Header("UI")]
+    [SerializeField] private GameObject Aim;
+
     public bool GetSetTutorialCanMove { get => TutorialCanMove; set => TutorialCanMove = value; }
     #endregion
 
     #region Metodos Unity
     void Start()
     {
+        CheckDifficult();
+
         if (SceneManager.GetActiveScene().name != "Level_1")
         {
             TutorialCanMove = true;
@@ -99,6 +107,13 @@ public class Player_Move : MonoBehaviour
         //hacemos que la gravedad se incremente
         gravitySpeed.y += gravity * Time.deltaTime;
         CHcontroller.Move(gravitySpeed * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PanelMenu.SetActive(true);
+            Time.timeScale = 0;
+            ActivateMenuPause();
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -191,7 +206,7 @@ public class Player_Move : MonoBehaviour
   
     private void Death()
     {
-
+        SceneManager.LoadScene("Death_Scene");
     }
     #endregion
 
@@ -210,6 +225,44 @@ public class Player_Move : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         canRun= true;
+    }
+
+
+    private void ActivateMenuPause()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void GoMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ResetNivel(string scene)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(scene);
+    }
+
+    public void ContinueLevel()
+    {
+        Time.timeScale = 1;
+        PanelMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+
+    private void CheckDifficult()
+    {
+        if (PlayerPrefs.GetInt("NormalDifficulty") == 1)
+        {
+            Aim.SetActive(true);
+        }
+        else if (PlayerPrefs.GetInt("NormalDifficulty") != 1)
+        {
+            Aim.SetActive(false);
+        }
     }
     #endregion
 }

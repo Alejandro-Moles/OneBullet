@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NumEnemies : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class NumEnemies : MonoBehaviour
     private void Update()
     {
         NumEnemies_txt.text = NumEnemies_num.ToString();
+
+        if(NumEnemies_num <= 0)
+        {
+            SceneManager.LoadScene("NivelSuperado");
+        }
     }
 
     public void RestEnemies(int num)

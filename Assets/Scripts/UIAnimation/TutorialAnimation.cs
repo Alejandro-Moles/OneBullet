@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialAnimation : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class TutorialAnimation : MonoBehaviour
     [SerializeField] private Player_Move playerMove;
     [SerializeField] private Player_Actions playerActions;
 
+    [SerializeField] private GameObject Panel_Victory;
 
     private void Update()
     {
@@ -195,7 +197,7 @@ public class TutorialAnimation : MonoBehaviour
         Debug.Log(EnemyCanDie);
         if(EnemyCanDie) 
         {
-            Debug.Log("Die");
+            SceneManager.LoadScene("NivelSuperado");
         }
     }
 
