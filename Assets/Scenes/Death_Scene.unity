@@ -698,13 +698,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6789335798276282249, guid: 9155f68998fd9e74c907c310c6fe8d87, type: 3}
       propertyPath: m_text
-      value: "\xA1HAS MUERTO!"
+      value: "\xA1HAS PERDIDO!"
       objectReference: {fileID: 0}
     - target: {fileID: 6789335798580928360, guid: 9155f68998fd9e74c907c310c6fe8d87, type: 3}
       propertyPath: m_text
-      value: 'No has podido completar
-
-        el nivel '
+      value: Gestiona mejor el numero de balas que tienes y esquiva a los enemigos
       objectReference: {fileID: 0}
     - target: {fileID: 6789335798580928360, guid: 9155f68998fd9e74c907c310c6fe8d87, type: 3}
       propertyPath: m_fontSize

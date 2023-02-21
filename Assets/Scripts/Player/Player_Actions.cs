@@ -30,6 +30,7 @@ public class Player_Actions : MonoBehaviour
     [Header("Municion")]
     //variable que indica la municion de balas
     private int Ammo = 1;
+    private int AmmoInMap = 5;
     [SerializeField] private TextMeshProUGUI ammoText;
 
     [Header("Granada")]
@@ -169,5 +170,7 @@ public class Player_Actions : MonoBehaviour
     public int GetSetAmmo { get => Ammo; set => Ammo = value; }
     public int GetSetGrenadeAmmo { get => GrenadeAmmo; set => GrenadeAmmo = value; }
     public bool GetSetTutorialShoot { get => TutorialShoot; set => TutorialShoot = value; }
+    public int GetSetAmmoInMap { get => AmmoInMap; set => AmmoInMap = value; }
+
     #endregion
 }

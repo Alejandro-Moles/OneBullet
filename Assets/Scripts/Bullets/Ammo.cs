@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Ammo : MonoBehaviour
 {
     //variable privada que nos dará acceso al scrip de player actiopns
     [SerializeField] private Player_Actions player_Actions;
     [SerializeField] private Animator player_Animator;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,6 +25,8 @@ public class Ammo : MonoBehaviour
                 player_Actions.ReloadAmmo();
                 //destruimos el objeto
                 Destroy(gameObject);
+
+                player_Actions.GetSetAmmoInMap--;
             }
         }
       
