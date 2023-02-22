@@ -9,6 +9,8 @@ public class GrenadeAmmo : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("AAA");
+
         //miramos si ha entrado en contacto con el jugador
         if (other.CompareTag("Player"))
         {

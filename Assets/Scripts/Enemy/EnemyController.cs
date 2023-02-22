@@ -165,7 +165,8 @@ public class EnemyController : MonoBehaviour, IDamage
     #region Metodos Interfaz
     public void DoDamage(int vid)
     {
-        isDeath= true;
+        this.GetComponent<BoxCollider>().enabled = false;
+        isDeath = true;
         //le decimos que su velocidad sea cero;
         agent.speed = 0;
 

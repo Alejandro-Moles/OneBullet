@@ -127,8 +127,13 @@ public class Player_Move : MonoBehaviour
                 isGrounded = true;
             }
         }
+    }
 
-        if (hit.collider.CompareTag("Enemy"))
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+        if (collision.collider.CompareTag("Enemy"))
         {
             Death();
         }

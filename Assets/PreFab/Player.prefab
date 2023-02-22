@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 474030962591913669}
   - component: {fileID: 474030962591913670}
   - component: {fileID: 474030962591913671}
+  - component: {fileID: 2919622726161967213}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -75,6 +76,9 @@ MonoBehaviour:
   jumpForce: 1
   PlayerAnimator: {fileID: 474030962229284574}
   runSpeed: 9
+  PanelMenu: {fileID: 0}
+  PanelUI: {fileID: 0}
+  Aim: {fileID: 0}
 --- !u!114 &474030962591913671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +102,20 @@ MonoBehaviour:
   ammoText: {fileID: 0}
   grenadePrefab: {fileID: 2743952917080061498, guid: 21dee39e8518c7044bf197ce0d114c2c, type: 3}
   GrenadeAmmoText: {fileID: 0}
+--- !u!136 &2919622726161967213
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474030962591913675}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.48972887
+  m_Height: 1.7210839
+  m_Direction: 1
+  m_Center: {x: 0.00000011920272, y: -0.16879058, z: 0.010271013}
 --- !u!1 &474030962734291403
 GameObject:
   m_ObjectHideFlags: 0
